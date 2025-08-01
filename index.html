@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Hello D3 World</title>
+  <meta charset="UTF-8" />
+  <title>A Century of CO₂ Emissions</title>
   <style>
     body {
       font-family: sans-serif;
-      padding: 2rem;
-      background: #f7f7f7;
       text-align: center;
+      margin: 2rem;
+      background: #f8f9fa;
     }
+
+    #controls {
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin: 0 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+
     svg {
-      margin-top: 2rem;
+      border: 1px solid #ccc;
+      background: #fff;
     }
   </style>
 </head>
 <body>
-  <h1>Hello, D3 World!</h1>
-  <p>If you see this, your GitHub Pages deployment is working 🎉</p>
+  <h1>A Century of CO₂ Emissions</h1>
 
-  <!-- D3 test graphic -->
-  <svg width="300" height="100">
-    <circle cx="50" cy="50" r="40" fill="steelblue" />
-    <text x="110" y="55" font-size="18" fill="black">D3 loaded!</text>
-  </svg>
+  <div id="controls">
+    <button onclick="changeScene(-1)">← Previous</button>
+    <button onclick="changeScene(1)">Next →</button>
+  </div>
 
-  <!-- Load D3 -->
+  <div id="viz-container"></div>
+
+  <!-- D3 and scripts -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="js/scene0.js"></script>
+  <script src="js/scene1.js"></script>
+  <script src="js/scene2.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

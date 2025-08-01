@@ -1,4 +1,4 @@
-function scene2() {
+function scene0() {
   const svg = d3.select("#viz-container")
     .append("svg")
     .attr("width", 300)
@@ -8,11 +8,11 @@ function scene2() {
     .attr("cx", 100)
     .attr("cy", 75)
     .attr("r", 40)
-    .attr("fill", "green");
+    .attr("fill", "steelblue");
 
   svg.append("text")
     .attr("x", 170)
     .attr("y", 80)
     .attr("font-size", 20)
-    .text("Scene 2");
+    .text("Scene 0");
 }
