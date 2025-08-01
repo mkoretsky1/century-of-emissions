@@ -3,7 +3,7 @@ function scene0() {
     container: "#viz-container",
     csvPath: "data/overall.csv",
     yearStart:1900, yearEnd:1938,
-    annoations:[
+    annotations:[
       {
         year: 1927,
         value:  GLOBAL.colour.has("USA"),
@@ -15,7 +15,6 @@ function scene0() {
         },
         connector: { end: "dot" }
       },
-
       {
         type: d3.annotationBracketY,
         x: margin.left - 30,
