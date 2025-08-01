@@ -4,9 +4,9 @@ function drawStackedAreaSubset({
   yearStart = 1900,
   yearEnd   = 2022,
   metric    = "co2",
-  width     = 720,
-  height    = 400,
-  margin    = {top: 40, right: 20, bottom: 35, left: 60}
+  width     = 1000,
+  height    = 600,
+  margin    = { top: 50, right: 180, bottom: 45, left: 80 }
 }) {
   /* wait until masterData has loaded */
   GLOBAL.ready.then(() => {
@@ -71,21 +71,30 @@ function drawStackedAreaSubset({
         .call(d3.axisLeft(y).ticks(6, "s"));
 
       /* legend */
+      const legendPadding = 20; // distance from plot area
+      const legendX = width - margin.right + legendPadding;
+      const legendY = margin.top;   // start below top margin
+
       const legend = svg.append("g")
-        .attr("font-size", 10)
-        .attr("text-anchor", "start")
-        .selectAll("g")
+        .attr("transform", `translate(${legendX},${legendY})`)
+        .attr("font-size", 12)
+        .attr("text-anchor", "start");
+
+      legend.selectAll("g")
         .data(GLOBAL.countries)
         .join("g")
-          .attr("transform", (d, i) => `translate(${margin.left},${i * 12})`);
+          .attr("transform", (d, i) => `translate(0,${i * 20})`)
+        .call(g => {
+          g.append("rect")
+             .attr("width", 14)
+             .attr("height", 14)
+             .attr("fill", d => GLOBAL.colour.get(d));
 
-      legend.append("rect")
-          .attr("width", 10).attr("height", 10)
-          .attr("fill", d => GLOBAL.colour.get(d));
-
-      legend.append("text")
-          .attr("x", 14).attr("y", 9)
-          .text(d => d);
+          g.append("text")
+             .attr("x", 20)
+             .attr("y", 11)
+             .text(d => d);
+        });
     });
   });
 }
