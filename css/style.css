@@ -25,12 +25,28 @@ svg {
 }
 
 .annotations .annotation-note-title {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   fill: #333;
 }
 
 .annotations .annotation-note-label {
-  font-size: 10px;
+  font-size: 12px;
   fill: #333;
+}
+
+.annotation-connector path,
+.annotation path.connector,
+.annotation path.connector-arrow,
+.annotation path.connector-dot
+{
+  stroke: #000000;
+  fill:   #000000;
+}
+
+.annotation-subject circle,
+.annotation-subject path
+{
+  fill:   #000000;
+  stroke: #000000;
 }
