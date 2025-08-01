@@ -1,6 +1,6 @@
 window.GLOBAL = {};
 
-GLOBAL.ready = d3.csv("data/all_years_all_vars.csv", d3.autoType).then(all => {
+GLOBAL.ready = d3.csv("data/overall.csv", d3.autoType).then(all => {
   /* rank by TOTAL co2 across every year */
   const totals = d3.rollups(
     all,
@@ -9,8 +9,8 @@ GLOBAL.ready = d3.csv("data/all_years_all_vars.csv", d3.autoType).then(all => {
   ).sort((a, b) => d3.descending(a[1], b[1]));
 
   GLOBAL.countries = totals.slice(0, 10).map(([c]) => c);
-  const PALETTE    = d3.schemeTableau10;
-  GLOBAL.colour    = new Map(GLOBAL.countries.map((c, i) => [c, PALETTE[i]]));
+  const PALETTE = d3.schemeTableau10;
+  GLOBAL.colour = new Map(GLOBAL.countries.map((c, i) => [c, PALETTE[i]]));
 
   return GLOBAL;
 });

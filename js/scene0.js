@@ -1,7 +1,7 @@
 function scene0() { 
   drawStackedAreaSubset({
     container: "#viz-container",
-    csvPath: "data/all_years_all_vars.csv",
+    csvPath: "data/overall.csv",
     yearStart:1900, yearEnd:1938
   });
 }
