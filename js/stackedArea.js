@@ -167,13 +167,15 @@ function drawStackedAreaSubset({
                                           : a.to;
 
             return {
-              type: d3.annotationBracketY,
-              x: margin.left - 30,
-              y1: y(yFrom),
-              y2: y(yTo),
-              dy: a.dy ?? 0,
-              dx: a.dx ?? 0,
-              note: { title: a.title, label: a.text, align: "left" }
+              type : d3.annotationBracketY,
+              x    : margin.left - 30,      // horizontal position of the bracket line
+              dx   : a.dx ?? 0,
+              dy   : a.dy ?? 0,
+              note : { title: a.title, label: a.text, align: "left" },
+              subject : {
+                y1 : y(yFromData),          // top of the bracket (pixels)
+                y2 : y(yToData)             // bottom of the bracket (pixels)
+              }
             };
           }
 
