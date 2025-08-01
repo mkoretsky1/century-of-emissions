@@ -154,7 +154,7 @@ function drawStackedAreaSubset({
               dx: a.dx ?? 0,
               dy: a.dy ?? 0,
               subject: { radius: 2 },
-              note: { title: a.title, label: a.text, wrap: 200 },
+              note: { title: a.title, label: a.text, wrap: 250 },
               connector: { end: "dot", lineType : "horizontal" }
             };
           }
