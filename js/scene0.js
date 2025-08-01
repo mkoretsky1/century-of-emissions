@@ -8,7 +8,7 @@ function scene0() {
         type: "label",
         year: 1929,
         country: "Ukraine",
-        dx: -160,
+        dx: -220,
         dy: 0,
         title: "Great Depression begins October 1929",
         text:  "US Stock Market crash impacts economies globally, causing CO₂ emissions to decrease."
