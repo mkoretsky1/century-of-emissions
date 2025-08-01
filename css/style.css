@@ -1,0 +1,26 @@
+body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 2rem;
+      background: #f8f9fa;
+}
+
+#controls {
+    margin-bottom: 1rem;
+}
+
+button {
+    margin: 0 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+svg {
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

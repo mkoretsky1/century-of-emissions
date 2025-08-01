@@ -3,36 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <title>A Century of CO₂ Emissions</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      margin: 2rem;
-      background: #f8f9fa;
-    }
-
-    #controls {
-      margin-bottom: 1rem;
-    }
-
-    button {
-      margin: 0 1rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-    }
-
-    svg {
-      border: 1px solid #ccc;
-      background: #fff;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <h1>A Century of CO₂ Emissions</h1>
 
   <div id="controls">
-    <button onclick="changeScene(-1)">← Previous</button>
-    <button onclick="changeScene(1)">Next →</button>
+    <button id="prev-btn" onclick="changeScene(-1)">← Previous</button>
+    <button id="next-btn" onclick="changeScene(1)">Next →</button>
   </div>
 
   <div id="viz-container"></div>
