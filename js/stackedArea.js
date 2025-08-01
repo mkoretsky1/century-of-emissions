@@ -5,8 +5,8 @@ function drawStackedAreaSubset({
   yearEnd     = 2022,
   metric      = "co2",
   width       = 1000,
-  height      = 500,
-  margin      = { top: 50, right: 180, bottom: 45, left: 80 },
+  height      = 550,
+  margin      = { top: 80, right: 180, bottom: 45, left: 80 },
   annotations = []
 }) {
   /* wait until masterData has loaded */
