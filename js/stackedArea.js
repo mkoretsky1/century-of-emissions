@@ -69,7 +69,9 @@ function drawStackedAreaSubset({
           .attr("fill", d => GLOBAL.colour.get(d.key))
           .attr("d", areaZero)
         .transition(t)
-          .attr("d", area); 
+          .attr("d", area)
+        .end()
+        .then(renderAnnotations); 
 
       // const area = d3.area()
       //   .x(d => x(d.data.Year) + x.bandwidth() / 2)
@@ -138,38 +140,39 @@ function drawStackedAreaSubset({
              .attr("y", 11)
              .text(d => d);
         });
+      function renderAnnotations() {
+          /* annotations */
+        if (annotations.length) {
+          const sceneAnn = annotations.map(a => {
+            if (a.type === "label") {
+              const yearIdx = years.indexOf(a.year);
+              const countryIdx = GLOBAL.countries.indexOf(a.country);
+              const yVal = stacked[countryIdx][yearIdx][1];
 
-      /* annotations */
-      if (annotations.length) {
-        const sceneAnn = annotations.map(a => {
-          if (a.type === "label") {
-            const yearIdx = years.indexOf(a.year);
-            const countryIdx = GLOBAL.countries.indexOf(a.country);
-            const yVal = stacked[countryIdx][yearIdx][1];
+              return {
+                type: d3.annotationCallout,
+                x: x(a.year) + x.bandwidth() / 2,
+                y: y(yVal),
+                dx: a.dx ?? 0,
+                dy: a.dy ?? 0,
+                subject: { radius: 2 },
+                note: { title: a.title, label: a.text, wrap: a.wrap },
+                connector: { end: "dot", lineType : "horizontal" }
+              };
+            }
 
-            return {
-              type: d3.annotationLabel,
-              x: x(a.year) + x.bandwidth() / 2,
-              y: y(yVal),
-              dx: a.dx ?? 0,
-              dy: a.dy ?? 0,
-              subject: { radius: 2 },
-              note: { title: a.title, label: a.text, wrap: a.wrap },
-              connector: { end: "dot", lineType : "horizontal" }
-            };
-          }
+            return null;
+          }).filter(Boolean);
 
-          return null;
-        }).filter(Boolean);
-
-        svg.append("g")
-          .attr("class", "annotations")
-          .call(
-            d3.annotation()
-              .type(d3.annotationLabel)
-              .annotations(sceneAnn)
-          );
-      }
+          svg.append("g")
+            .attr("class", "annotations")
+            .call(
+              d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations(sceneAnn)
+            );
+        }
+      };
     });
   });
 }
