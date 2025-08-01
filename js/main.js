@@ -1,22 +1,25 @@
 let sceneIndex = 0;
 const scenes = [drawScene0, drawScene1, drawScene2];
 
-function changeScene(delta) {
-  sceneIndex = Math.max(0, Math.min(sceneIndex + delta, scenes.length - 1));
-  d3.select("#viz-container").html(""); // clear previous scene
-  scenes[sceneIndex](); // render new scene
-  updateButtonStates(); // disable/enable buttons as needed
+function renderScene() {
+  d3.select("#viz-container").html("");
+  scenes[sceneIndex]();
+  updateButtons();
 }
 
-function updateButtonStates() {
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
-
-  prevBtn.disabled = sceneIndex === 0;
-  nextBtn.disabled = sceneIndex === scenes.length - 1;
+function updateButtons() {
+  document.getElementById("prev-btn").disabled = sceneIndex === 0;
+  document.getElementById("next-btn").disabled = sceneIndex === scenes.length - 1;
 }
 
-window.onload = () => {
-  scenes[0]();
-  updateButtonStates();
-};
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("prev-btn").addEventListener("click", () => {
+    if (sceneIndex > 0) { sceneIndex--; renderScene(); }
+  });
+  document.getElementById("next-btn").addEventListener("click", () => {
+    if (sceneIndex < scenes.length - 1) { sceneIndex++; renderScene(); }
+  });
+
+  renderScene();
+});
