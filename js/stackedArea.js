@@ -142,13 +142,13 @@ function drawStackedAreaSubset({
       /* annotations */
       if (annotations.length) {
         const sceneAnn = annotations.map(a => {
-          if (a.type === "callout") {
+          if (a.type === "label") {
             const yearIdx = years.indexOf(a.year);
             const countryIdx = GLOBAL.countries.indexOf(a.country);
             const yVal = stacked[countryIdx][yearIdx][1];
 
             return {
-              type: d3.annotationCallout,
+              type: d3.annotationLabel,
               x: x(a.year) + x.bandwidth() / 2,
               y: y(yVal),
               dx: a.dx ?? 0,

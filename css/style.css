@@ -23,3 +23,14 @@ button:disabled {
 svg {
   background: #fff;
 }
+
+.annotations .annotation-note-title {
+  font-size: 12px;
+  font-weight: 600;
+  fill: #333;
+}
+
+.annotations .annotation-note-label {
+  font-size: 10px;
+  fill: #333;
+}
