@@ -154,12 +154,16 @@ function drawStackedAreaSubset({
 
         const baseline = y(0);                   // pixel y of the x-axis
 
-        annGroup.selectAll(".annotation")        // each note group
-          .attr("transform", d => `translate(${d.x},${baseline})`)  // start flat
-          .transition(t)                         // same transition as areas
+        const t2 = d3.transition()          // new transition
+               .duration(1200)
+               .ease(d3.easeCubicOut);
+
+        annGroup.selectAll(".annotation")
+          .attr("transform", d => `translate(${d.x},${baseline})`)
+          .transition(t2)
             .attr("transform", d => `translate(${d.x},${d.y})`);
 
-        annGroup.transition(t)                   // fade the whole layer in
+        annGroup.transition(t2)
           .style("opacity", 1);
       }
     });
