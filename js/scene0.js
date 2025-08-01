@@ -12,7 +12,7 @@ function scene0() {
         dy: -10,
         wrap: 250,
         title: "Great Depression begins (October 1929)",
-        text:  "United States Stock Market crash impacts economies globally, causing industrial output to decrease and CO₂ emissions to drop."
+        text:  "United States Stock Market crash sets of the Great Depression. Economies around the globe are affected, causing industrial output to decrease and CO₂ emissions to drop."
       },
       {
         type: "label",

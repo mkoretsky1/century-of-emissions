@@ -12,7 +12,7 @@ function scene1() {
         dy: -200,
         wrap: 250,
         title: "World War II Ends (September 1945)",
-        text:  "The end of history's deadliest war starts an era of massive economic growth and with is a boom in CO₂ emissions"
+        text:  "The end of history's deadliest war starts an era of unprecedented economic growth. In turn, CO₂ emissions begin to increase rapidly."
       },
       {
         type: "label",
@@ -22,7 +22,7 @@ function scene1() {
         dy: -10,
         wrap: 250,
         title: "Emissions Explode",
-        text: "Total CO₂ output from the top 10 emitting countries increases ~3.5x in just over 50 years."
+        text: "The total CO₂ output from the top 10 emitting countries increases around 3.5x in just over 50 years."
       }
     ]
   });
