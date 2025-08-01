@@ -161,20 +161,25 @@ function drawStackedAreaSubset({
           }
 
           if (a.type === "bracketY") {
-            const yFrom = a.from === "max" ? d3.max(stacked[stacked.length - 1], d => d[1])
-                                          : a.from;
-            const yTo   =  a.to  === "max" ? d3.max(stacked[stacked.length - 1], d => d[1])
-                                          : a.to;
+            const domainTop = d3.max(stacked[stacked.length - 1], d => d[1]);
+            const fromVal   = a.from === "max" ? domainTop : a.from;
+            const toVal     = a.to   === "max" ? domainTop : a.to;
 
             return {
-              type : d3.annotationBracketY,
-              x    : margin.left - 30,      // horizontal position of the bracket line
-              dx   : a.dx ?? 0,
-              dy   : a.dy ?? 0,
-              note : { title: a.title, label: a.text, align: "left" },
-              subject : {
-                y1 : y(yFromData),          // top of the bracket (pixels)
-                y2 : y(yToData)             // bottom of the bracket (pixels)
+              type: d3.annotationBracketY,
+              x: margin.left - 30,
+
+              dx: a.dx ?? 0,
+              dy: a.dy ?? 0,
+
+              note: {
+                title: a.title,
+                label: a.text,
+                align: "left"
+              },
+              subject: {
+                y1: y(toVal),
+                y2: y(fromVal)
               }
             };
           }
