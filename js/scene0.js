@@ -6,13 +6,7 @@ function scene0() {
     annoations:[
       {
         year: 1927,
-        value:  GLOBAL.colour.has("USA")
-                ? (() => {
-                     const idx = GLOBAL.countries.indexOf("USA");
-                     const h   = stacked[idx][years.indexOf(1927)][1];
-                     return h;
-                   })()
-                : 0,
+        value:  GLOBAL.colour.has("USA"),
         dx: -150, dy: -20,
         subject: { radius: 4 },
         note: {
