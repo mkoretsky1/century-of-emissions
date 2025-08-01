@@ -4,8 +4,8 @@ function drawStackedAreaSubset({
   yearStart = 1900,
   yearEnd   = 2022,
   metric    = "co2",
-  width     = 800,
-  height    = 700,
+  width     = 1000,
+  height    = 500,
   margin    = { top: 50, right: 180, bottom: 45, left: 80 }
 }) {
   /* wait until masterData has loaded */
@@ -48,6 +48,15 @@ function drawStackedAreaSubset({
         .y0(d => y(d[0]))
         .y1(d => y(d[1]));
 
+      const areaZero = d3.area()
+        .x(d => x(d.data.Year) + x.bandwidth() / 2)
+        .y0(() => y(0))
+        .y1(() => y(0));
+
+      const t = d3.transition()
+                  .duration(1200)
+                  .ease(d3.easeCubicOut);
+
       const svg = d3.select(container).append("svg")
         .attr("width",  width)
         .attr("height", height);
@@ -57,7 +66,25 @@ function drawStackedAreaSubset({
         .data(stacked)
         .join("path")
           .attr("fill", d => GLOBAL.colour.get(d.key))
-          .attr("d", area);
+          .attr("d", areaZero)
+        .transition(t)
+          .attr("d", area); 
+
+      // const area = d3.area()
+      //   .x(d => x(d.data.Year) + x.bandwidth() / 2)
+      //   .y0(d => y(d[0]))
+      //   .y1(d => y(d[1]));
+
+      // const svg = d3.select(container).append("svg")
+      //   .attr("width",  width)
+      //   .attr("height", height);
+
+      // svg.append("g")
+      //   .selectAll("path")
+      //   .data(stacked)
+      //   .join("path")
+      //     .attr("fill", d => GLOBAL.colour.get(d.key))
+      //     .attr("d", area);
 
       /* axes */
       svg.append("g")
