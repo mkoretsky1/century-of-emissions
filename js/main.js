@@ -20,5 +20,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sceneIndex < scenes.length - 1) { sceneIndex++; renderScene(); }
   });
 
+  window.addEventListener("keydown", (e) => {
+    switch (e.key) {
+      case "ArrowLeft":
+        if (sceneIndex > 0) { sceneIndex--; renderScene(); }
+        break;
+      case "ArrowRight":
+        if (sceneIndex < scenes.length - 1) { sceneIndex++; renderScene(); }
+        break;
+      default:
+    }
+  });
+
   renderScene();
 });
