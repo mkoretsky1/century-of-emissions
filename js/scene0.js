@@ -22,7 +22,7 @@ function scene0() {
         dy: 10,
         wrap: 150,
         title: "Franklin D. Roosevelt is Elected",
-        text: "New Deal programs stabilize the economy and increase industrial output, causing emissions in the United States to increase."
+        text: "New Deal programs stabilize the economy and increase industrial output in the United States, causing emissions to increase."
       }
     ]
   });
