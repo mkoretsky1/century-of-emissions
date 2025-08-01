@@ -7,7 +7,7 @@ function scene0() {
       {
         type: "label",
         year: 1927,
-        country: "USA",
+        country: "United States",
         dx: -160,
         dy: -25,
         title: "USA triples output",
