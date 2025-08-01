@@ -73,22 +73,6 @@ function drawStackedAreaSubset({
         .end()
         .then(renderAnnotations); 
 
-      // const area = d3.area()
-      //   .x(d => x(d.data.Year) + x.bandwidth() / 2)
-      //   .y0(d => y(d[0]))
-      //   .y1(d => y(d[1]));
-
-      // const svg = d3.select(container).append("svg")
-      //   .attr("width",  width)
-      //   .attr("height", height);
-
-      // svg.append("g")
-      //   .selectAll("path")
-      //   .data(stacked)
-      //   .join("path")
-      //     .attr("fill", d => GLOBAL.colour.get(d.key))
-      //     .attr("d", area);
-
       /* axes */
       svg.append("g")
         .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -164,13 +148,19 @@ function drawStackedAreaSubset({
             return null;
           }).filter(Boolean);
 
-          svg.append("g")
+          const annGroup = svg.append("g")
             .attr("class", "annotations")
-            .call(
-              d3.annotation()
-                .type(d3.annotationLabel)
-                .annotations(sceneAnn)
-            );
+            .attr("opacity", 0)
+            .call(d3.annotation().annotations(sceneAnn));
+
+          annGroup.selectAll(".annotation")
+            .attr("transform", d => {
+              const { x, y } = d;
+              return `translate(${x},${y(0)})`;
+            })
+            .transition(t)
+              .attr("transform", d => `translate(${d.x},${d.y})`)
+              .style("opacity", 1);
         }
       };
     });
