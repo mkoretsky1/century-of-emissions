@@ -25,7 +25,7 @@ svg {
 }
 
 .annotations .annotation-note-title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   fill: #333;
 }
@@ -38,7 +38,8 @@ svg {
 .annotation-connector path,
 .annotation path.connector,
 .annotation path.connector-arrow,
-.annotation path.connector-dot
+.annotation path.connector-dot,
+.annotation-note .note-line
 {
   stroke: #000000;
   fill:   #000000;
