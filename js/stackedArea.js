@@ -4,8 +4,8 @@ function drawStackedAreaSubset({
   yearStart = 1900,
   yearEnd   = 2022,
   metric    = "co2",
-  width     = 1000,
-  height    = 600,
+  width     = 800,
+  height    = 700,
   margin    = { top: 50, right: 180, bottom: 45, left: 80 }
 }) {
   /* wait until masterData has loaded */
@@ -69,6 +69,21 @@ function drawStackedAreaSubset({
       svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(y).ticks(6, "s"));
+
+      svg.append("text")
+        .attr("x", (width - margin.right + margin.left) / 2)
+        .attr("y", height - margin.bottom + 35)
+        .attr("text-anchor", "middle")
+        .attr("font-size", 14)
+        .text("Year");
+
+      svg.append("text")
+          .attr("transform", `rotate(-90)`)
+          .attr("x", - (height - margin.top - margin.bottom) / 2)
+          .attr("y", margin.left - 50)
+          .attr("text-anchor", "middle")
+          .attr("font-size", 14)
+          .text("CO₂ emissions (Billion Metric Tons)");
 
       /* legend */
       const legendPadding = 20; // distance from plot area
