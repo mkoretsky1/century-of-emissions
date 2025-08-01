@@ -18,9 +18,9 @@ function scene2() {
         type: "label",
         year: 2022,
         country: "United States",
-        dx: 50,
+        dx: 60,
         dy: 10,
-        wrap: 150,
+        wrap: 175,
         title: "Renewable Energy and Climate Change",
         text: "Increased investment in renewable energy sources and concern over climate change causes United States emissions to stay fairly constant in the modern era."
       }
