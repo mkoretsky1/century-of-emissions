@@ -124,46 +124,50 @@ function drawStackedAreaSubset({
              .attr("y", 11)
              .text(d => d);
         });
-      function renderAnnotations() {
-          /* annotations */
-        if (annotations.length) {
-          const sceneAnn = annotations.map(a => {
+      function renderAnnotations () {
+
+        if (!annotations.length) return;
+
+        const sceneAnn = annotations
+          .map(a => {
             if (a.type === "label") {
-              const yearIdx = years.indexOf(a.year);
+              const yearIdx    = years.indexOf(a.year);
               const countryIdx = GLOBAL.countries.indexOf(a.country);
+              if (yearIdx === -1 || countryIdx === -1) return null;
+
               const yVal = stacked[countryIdx][yearIdx][1];
 
               return {
-                type: d3.annotationCallout,
-                x: x(a.year) + x.bandwidth() / 2,
-                y: y(yVal),
-                dx: a.dx ?? 0,
-                dy: a.dy ?? 0,
-                subject: { radius: 2 },
-                note: { title: a.title, label: a.text, wrap: a.wrap },
-                connector: { end: "dot", lineType : "horizontal" }
+                type : d3.annotationCallout,
+                x    : x(a.year) + x.bandwidth() / 2,
+                y    : y(yVal),
+                dx   : a.dx ?? 0,
+                dy   : a.dy ?? 0,
+                subject   : { radius : 2 },
+                note      : { title : a.title, label : a.text, wrap : a.wrap },
+                connector : { end : "dot", lineType : "horizontal" }
               };
             }
-
             return null;
-          }).filter(Boolean);
+          })
+          .filter(Boolean);
 
-          const annGroup = svg.append("g")
-            .attr("class", "annotations")
-            .attr("opacity", 0)
-            .call(d3.annotation().annotations(sceneAnn));
+        /* ---------- draw & animate -------------------------------- */
+        const annGroup = svg.append("g")
+          .attr("class", "annotations")
+          .attr("opacity", 0)                    // fade in later
+          .call(d3.annotation().annotations(sceneAnn));
 
-          annGroup.selectAll(".annotation")
-            .attr("opacity", 0)
-            .selectAll(".annotation")
-              .attr("transform", d => `translate(${d.x},${baseline})`)
-              .transition(t)
-                .attr("transform", d => `translate(${d.x},${d.y})`);
+        const baseline = y(0);                   // pixel y of the x-axis
 
-          annGroup.transition(t)
-            .style("opacity", 1);
-        }
-      };
+        annGroup.selectAll(".annotation")        // each note group
+          .attr("transform", d => `translate(${d.x},${baseline})`)  // start flat
+          .transition(t)                         // same transition as areas
+            .attr("transform", d => `translate(${d.x},${d.y})`);
+
+        annGroup.transition(t)                   // fade the whole layer in
+          .style("opacity", 1);
+      }
     });
   });
 }
