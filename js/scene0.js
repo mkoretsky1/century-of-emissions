@@ -6,12 +6,11 @@ function scene0() {
     annotations: [
       {
         type: "callout",
-        year: 1927,
-        country: "United States",
+        year: 1929,
+        country: "Ukraine",
         dx: -160,
-        dy: -25,
-        title: "USA triples output",
-        text:  "Post-WWI industrial boom\npushes US CO₂ to ≈350 Mt"
+        title: "Great Depression begins October 1929",
+        text:  "US Stock Market crash impacts economies globally, causing CO₂ emissions to decrease."
       }
     ]
   });
