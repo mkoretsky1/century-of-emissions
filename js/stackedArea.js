@@ -154,13 +154,14 @@ function drawStackedAreaSubset({
             .call(d3.annotation().annotations(sceneAnn));
 
           annGroup.selectAll(".annotation")
-            .attr("transform", d => {
-              const { x, y } = d;
-              return `translate(${x},${y(0)})`;
-            })
-            .transition(t)
-              .attr("transform", d => `translate(${d.x},${d.y})`)
-              .style("opacity", 1);
+            .attr("opacity", 0)
+            .selectAll(".annotation")
+              .attr("transform", d => `translate(${d.x},${baseline})`)
+              .transition(t)
+                .attr("transform", d => `translate(${d.x},${d.y})`);
+
+          annGroup.transition(t)
+            .style("opacity", 1);
         }
       };
     });
