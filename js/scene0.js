@@ -18,7 +18,7 @@ function scene0() {
         type: "label",
         year: 1932,
         country: "United States",
-        dx: 100,
+        dx: 125,
         dy: 10,
         wrap: 150,
         title: "Franklin D. Roosevelt is Elected",
