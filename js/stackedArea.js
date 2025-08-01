@@ -168,10 +168,9 @@ function drawStackedAreaSubset({
             return {
               type: d3.annotationBracketY,
               x: margin.left - 30,
-
+              y: y(toVal),
               dx: a.dx ?? 0,
               dy: a.dy ?? 0,
-
               note: {
                 title: a.title,
                 label: a.text,
