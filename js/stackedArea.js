@@ -142,14 +142,14 @@ function drawStackedAreaSubset({
       /* ---------- annotations ---------------------------------- */
       if (annotations.length) {
         const sceneAnn = annotations.map(a => {
-          if (a.type === "label") {
+          if (a.type === "callout") {
             /* look up the stacked height for the chosen country & year */
             const yearIdx = years.indexOf(a.year);
             const countryIdx = GLOBAL.countries.indexOf(a.country);
             const yVal = stacked[countryIdx][yearIdx][1];   // top of that layer
 
             return {
-              type: d3.annotationLabel,
+              type: d3.annotationCallout,
               x: x(a.year) + x.bandwidth() / 2,
               y: y(yVal),
               dx: a.dx ?? 0,
@@ -157,29 +157,6 @@ function drawStackedAreaSubset({
               subject: { radius: 4 },
               note: { title: a.title, label: a.text },
               connector: { end: "dot" }
-            };
-          }
-
-          if (a.type === "bracketY") {
-            const domainTop = d3.max(stacked[stacked.length - 1], d => d[1]);
-            const fromVal   = a.from === "max" ? domainTop : a.from;
-            const toVal     = a.to   === "max" ? domainTop : a.to;
-
-            return {
-              type: d3.annotationBracketY,
-              x: margin.left - 30,
-              y: y(toVal),
-              dx: a.dx ?? 0,
-              dy: a.dy ?? 0,
-              note: {
-                title: a.title,
-                label: a.text,
-                align: "left"
-              },
-              subject: {
-                y1: y(toVal),
-                y2: y(fromVal)
-              }
             };
           }
 
