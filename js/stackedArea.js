@@ -141,21 +141,52 @@ function drawStackedAreaSubset({
 
       /* ---------- annotations ---------------------------------- */
       if (annotations.length) {
-        const makeAnnotations = d3.annotation()
-          .type(d3.annotationLabel)
-          .accessors({
-            x: d => x(d.year) + x.bandwidth() / 2,
-            y: d => y(d.value)
-          })
-          .accessorsInverse({
-            year: d => x.domain()[Math.round(
-              (d.x - margin.left) / x.step())],
-            value: d => y.invert(d.y)
-          })
-          .annotations(annotations);
-    
-        svg.append("g").attr("class", "annotations")
-           .call(makeAnnotations);
+        const sceneAnn = annotations.map(a => {
+          if (a.type === "label") {
+            /* look up the stacked height for the chosen country & year */
+            const yearIdx = years.indexOf(a.year);
+            const countryIdx = GLOBAL.countries.indexOf(a.country);
+            const yVal = stacked[countryIdx][yearIdx][1];   // top of that layer
+
+            return {
+              type: d3.annotationLabel,
+              x: x(a.year) + x.bandwidth() / 2,
+              y: y(yVal),
+              dx: a.dx ?? 0,
+              dy: a.dy ?? 0,
+              subject: { radius: 4 },
+              note: { title: a.title, label: a.text },
+              connector: { end: "dot" }
+            };
+          }
+
+          if (a.type === "bracketY") {
+            const yFrom = a.from === "max" ? d3.max(stacked[stacked.length - 1], d => d[1])
+                                          : a.from;
+            const yTo   =  a.to  === "max" ? d3.max(stacked[stacked.length - 1], d => d[1])
+                                          : a.to;
+
+            return {
+              type: d3.annotationBracketY,
+              x: margin.left - 30,
+              y1: y(yFrom),
+              y2: y(yTo),
+              dy: a.dy ?? 0,
+              dx: a.dx ?? 0,
+              note: { title: a.title, label: a.text, align: "left" }
+            };
+          }
+
+          return null;   // unknown type – skip
+        }).filter(Boolean);
+
+        svg.append("g")
+          .attr("class", "annotations")
+          .call(
+            d3.annotation()
+              .type(d3.annotationLabel)   // default; overridden per item
+              .annotations(sceneAnn)
+          );
       }
     });
   });

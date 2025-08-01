@@ -3,31 +3,24 @@ function scene0() {
     container: "#viz-container",
     csvPath: "data/overall.csv",
     yearStart:1900, yearEnd:1938,
-    annotations:[
+    annotations: [
       {
+        type: "label",
         year: 1927,
-        value:  GLOBAL.colour.has("USA"),
-        dx: -150, dy: -20,
-        subject: { radius: 4 },
-        note: {
-          title: "USA triples output",
-          label: "Rapid industrial growth after WWI pushed\nUSA CO₂ to ~350 Mt."
-        },
-        connector: { end: "dot" }
+        country: "USA",
+        dx: -160,
+        dy: -25,
+        title: "USA triples output",
+        text:  "Post-WWI industrial boom\npushes US CO₂ to ≈350 Mt"
       },
       {
-        type: d3.annotationBracketY,
-        x: margin.left - 30,
-        y: y(0),
-        y1: y(0),
-        y2: y(d3.max(stacked[stacked.length - 1], d => d[1])),
-        note: {
-          title: "Emissions explode",
-          label: `Total top-10 output grows\n${y.domain()[1] /  y.domain()[0]}× in 40 years`,
-          align: "left"
-        },
-        dy: -20,
-        dx: 0
+        type: "bracketY",
+        from: 0,
+        to: "max",
+        dx: 0,
+        dy: -25,
+        title: "Emissions explode",
+        text:  "Top-10 output grows ~6×\nwithin this era"
       }
     ]
   });
