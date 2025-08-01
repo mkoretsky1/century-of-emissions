@@ -1,5 +1,5 @@
 let sceneIndex = 0;
-const scenes = [drawScene0, drawScene1, drawScene2];
+const scenes = [scene0, scene1, scene2];
 
 function renderScene() {
   d3.select("#viz-container").html("");
@@ -11,7 +11,6 @@ function updateButtons() {
   document.getElementById("prev-btn").disabled = sceneIndex === 0;
   document.getElementById("next-btn").disabled = sceneIndex === scenes.length - 1;
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("prev-btn").addEventListener("click", () => {
