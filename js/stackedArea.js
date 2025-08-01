@@ -128,31 +128,25 @@ function drawStackedAreaSubset({
 
         if (!annotations.length) return;
 
-        const sceneAnn = annotations
-          .map(a => {
-            if (a.type === "label") {
-              const yearIdx    = years.indexOf(a.year);
-              const countryIdx = GLOBAL.countries.indexOf(a.country);
-              if (yearIdx === -1 || countryIdx === -1) return null;
+        const sceneAnn = annotations.map(a => {
+          const yearIdx    = years.indexOf(+a.year);
+          const countryIdx = GLOBAL.countries.indexOf(a.country);
+          if (yearIdx === -1 || countryIdx === -1) return null;
 
-              const yVal = stacked[countryIdx][yearIdx][1];
+          const yVal = stacked[countryIdx][yearIdx][1];
+          return {
+            type : d3.annotationCallout,      // any callout style you like
+            x    : x(a.year) + x.bandwidth() / 2,
+            y    : y(yVal),
+            dx   : a.dx ?? 0,
+            dy   : a.dy ?? 0,
+            subject   : { radius: 2 },
+            note      : { title: a.title, label: a.text, wrap: a.wrap },
+            connector : { end: "dot", lineType: "horizontal" }
+          };
+        }).filter(Boolean);
 
-              return {
-                type : d3.annotationCallout,
-                x    : x(a.year) + x.bandwidth() / 2,
-                y    : y(yVal),
-                dx   : a.dx ?? 0,
-                dy   : a.dy ?? 0,
-                subject   : { radius : 2 },
-                note      : { title : a.title, label : a.text, wrap : a.wrap },
-                connector : { end : "dot", lineType : "horizontal" }
-              };
-            }
-            return null;
-          })
-          .filter(Boolean);
-
-        /* ---------- draw & animate -------------------------------- */
+        /* draw & animate */
         const annGroup = svg.append("g")
           .attr("class", "annotations")
           .attr("opacity", 0)                    // fade in later
