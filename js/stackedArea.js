@@ -1,12 +1,13 @@
 function drawStackedAreaSubset({
   container,
   csvPath,
-  yearStart = 1900,
-  yearEnd   = 2022,
-  metric    = "co2",
-  width     = 1000,
-  height    = 500,
-  margin    = { top: 50, right: 180, bottom: 45, left: 80 }
+  yearStart   = 1900,
+  yearEnd     = 2022,
+  metric      = "co2",
+  width       = 1000,
+  height      = 500,
+  margin      = { top: 50, right: 180, bottom: 45, left: 80 },
+  annotations = []
 }) {
   /* wait until masterData has loaded */
   GLOBAL.ready.then(() => {
@@ -137,6 +138,25 @@ function drawStackedAreaSubset({
              .attr("y", 11)
              .text(d => d);
         });
+
+      /* ---------- annotations ---------------------------------- */
+      if (annotations.length) {
+        const makeAnnotations = d3.annotation()
+          .type(d3.annotationLabel)
+          .accessors({
+            x: d => x(d.year) + x.bandwidth() / 2,
+            y: d => y(d.value)
+          })
+          .accessorsInverse({
+            year: d => x.domain()[Math.round(
+              (d.x - margin.left) / x.step())],
+            value: d => y.invert(d.y)
+          })
+          .annotations(annotations);
+    
+        svg.append("g").attr("class", "annotations")
+           .call(makeAnnotations);
+      }
     });
   });
 }
