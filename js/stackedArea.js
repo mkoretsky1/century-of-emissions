@@ -7,7 +7,8 @@ function drawStackedAreaSubset({
   width       = 1000,
   height      = 550,
   margin      = { top: 80, right: 180, bottom: 45, left: 80 },
-  annotations = []
+  annotations = [],
+  title       = 'Chart'
 }) {
   /* wait until masterData has loaded */
   GLOBAL.ready.then(() => {
@@ -100,15 +101,26 @@ function drawStackedAreaSubset({
         .call(d3.axisLeft(y).ticks(6, "s"));
 
       svg.append("text")
+          .attr("class", "chart-title")
+          .attr("x", (width - margin.right + margin.left) / 2)
+          .attr("y", margin.top / 2)
+          .attr("text-anchor", "middle")
+          .attr("font-size", 22)
+          .attr("font-weight", "600")
+          .text(title);
+
+      svg.append("text")
         .attr("x", (width - margin.right + margin.left) / 2)
         .attr("y", height - margin.bottom + 35)
         .attr("text-anchor", "middle")
         .attr("font-size", 14)
         .text("Year");
+      
+      const innerHeight = height - margin.top - margin.bottom;
 
       svg.append("text")
           .attr("transform", `rotate(-90)`)
-          .attr("x", - (height - margin.top - margin.bottom) / 2)
+          .attr("x", - innerHeight / 2)
           .attr("y", margin.left - 50)
           .attr("text-anchor", "middle")
           .attr("font-size", 14)

@@ -9,7 +9,7 @@ function scene1() {
         year: 1990,
         country: "Ukraine",
         dx: -100,
-        dy: -10,
+        dy: 0,
         wrap: 250,
         title: "Emissions Explode",
         text: "The total CO₂ output from the top 10 emitting countries increases around 3.5x in just over 50 years."
@@ -18,12 +18,13 @@ function scene1() {
         type: "label",
         year: 1945,
         country: "Ukraine",
-        dx: 50,
+        dx: 0,
         dy: -150,
         wrap: 250,
         title: "World War II Ends (September 1945)",
         text:  "The end of history's deadliest war starts an era of unprecedented economic growth. In turn, CO₂ emissions begin to increase rapidly."
       }
-    ]
+    ],
+    title: "WWII and Post-War Era (1939-1991)"
   });
 }

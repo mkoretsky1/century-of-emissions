@@ -9,8 +9,8 @@ function scene0() {
         year: 1929,
         country: "Ukraine",
         dx: -100,
-        dy: -10,
-        wrap: 250,
+        dy: 0,
+        wrap: 350,
         title: "Great Depression begins (October 1929)",
         text:  "United States Stock Market crash sets of the Great Depression. Economies around the globe are affected, causing industrial output to decrease and CO₂ emissions to drop."
       },
@@ -18,12 +18,13 @@ function scene0() {
         type: "label",
         year: 1932,
         country: "United States",
-        dx: 125,
-        dy: 10,
+        dx: 130,
+        dy: 0,
         wrap: 150,
         title: "Franklin D. Roosevelt is Elected",
         text: "New Deal programs stabilize the economy and increase industrial output in the United States, causing emissions to increase."
       }
-    ]
+    ],
+    title: "WWI and Depression Era (1900-1938)"
   });
 }

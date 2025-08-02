@@ -24,6 +24,7 @@ function scene2() {
         title: "Renewable Energy and Climate Change",
         text: "Increased investment in renewable energy sources and concern over climate change causes United States emissions to stay fairly constant in the modern era."
       }
-    ]
+    ],
+    title: "Digital and Global Era (1991-2022)"
   });
 }
