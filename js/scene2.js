@@ -8,7 +8,7 @@ function scene2() {
         type: "label",
         year: 2000,
         country: "China",
-        dx: 0,
+        dx: -0,
         dy: -200,
         wrap: 210,
         title: "China's Industrialization",

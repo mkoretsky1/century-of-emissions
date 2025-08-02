@@ -120,7 +120,7 @@ function drawStackedAreaSubset({
 
       svg.append("text")
           .attr("transform", `rotate(-90)`)
-          .attr("x", - innerHeight / 2)
+          .attr("x", - (margin.top-innerHeight / 2))
           .attr("y", margin.left - 50)
           .attr("text-anchor", "middle")
           .attr("font-size", 14)
