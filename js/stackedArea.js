@@ -44,6 +44,18 @@ function drawStackedAreaSubset({
         [height - margin.bottom, margin.top]
       );
 
+      const grid = d3.axisLeft(y)
+        .tickSize(-(width - margin.left - margin.right))
+        .ticks(6);
+
+      svg.append("g")
+        .attr("class", "y-grid")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(grid)
+        .selectAll("line")
+          .attr("stroke", "#ccc")
+          .attr("stroke-opacity", 0.6);
+
       const area = d3.area()
         .x(d => x(d.data.Year) + x.bandwidth() / 2)
         .y0(d => y(d[0]))
