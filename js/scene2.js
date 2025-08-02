@@ -11,8 +11,8 @@ function scene2() {
         dx: -0,
         dy: -200,
         wrap: 210,
-        title: "China's Industrialization",
-        text:  "China undergoes rapid industrialization in the early 21st century. As is turns into a manufacturing powerhouse it's emissions surpass that of the United States and Europe."
+        title: "Industrialization in China",
+        text:  "China undergoes rapid industrialization in the early 21st century, turning it into a manufacturing powerhouse. Their emissions soon surpass that of the United States and Europe."
       },
       {
         type: "label",

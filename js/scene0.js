@@ -12,7 +12,7 @@ function scene0() {
         dy: 0,
         wrap: 350,
         title: "Great Depression begins (October 1929)",
-        text:  "United States Stock Market crash sets of the Great Depression. Economies around the globe are affected, causing industrial output to decrease and CO₂ emissions to drop."
+        text:  "Wall Street crash marks the start of the Great Depression. Economies around the globe are affected, causing industrial output and CO₂ emissions to decrease rapidly."
       },
       {
         type: "label",
@@ -21,8 +21,8 @@ function scene0() {
         dx: 130,
         dy: 0,
         wrap: 150,
-        title: "Franklin D. Roosevelt is Elected",
-        text: "New Deal programs stabilize the economy and increase industrial output in the United States, causing emissions to increase."
+        title: "FDR Elected (November 1932)",
+        text: "His New Deal programs stabilize the economy and increase industrial output in the United States, causing emissions to increase."
       }
     ],
     title: "WWI and Depression Era (1900-1938)"
