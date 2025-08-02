@@ -19,6 +19,17 @@ function drawStackedAreaSubset({
         d.year >= yearStart && d.year <= yearEnd
       );
 
+      const dataByCountry = d3.group(data, d => d.country);
+
+      const sparkWidth  = 100;
+      const sparkHeight =  40;
+      const sparkMargin = { top: 2, right: 2, bottom: 2, left: 2 };
+
+      // a simple line generator for sparklines:
+      const sparkLine = d3.line()
+        .x(d => sparkX(d.year))
+        .y(d => sparkY(d.value));
+
       /* pivot to wide form for d3.stack */
       const roll = d3.rollup(
         data,
@@ -59,6 +70,22 @@ function drawStackedAreaSubset({
                   .duration(1200)
                   .ease(d3.easeCubicOut);
 
+      let tip = d3.select(container).select(".tooltip");
+      if (tip.empty()) {
+        tip = d3.select(container)
+          .append("div")
+          .attr("class", "tooltip")
+          .style("position", "absolute")
+          .style("background", "#fff")
+          .style("border", "1px solid #999")
+          .style("border-radius", "4px")
+          .style("padding", "6px 8px")
+          .style("pointer-events", "none")
+          .style("font-size", "12px")
+          .style("box-shadow", "0 2px 6px rgba(0,0,0,0.3)")
+          .style("opacity", 0);
+      }
+
       const svg = d3.select(container).append("svg")
         .attr("width",  width)
         .attr("height", height);
@@ -77,17 +104,152 @@ function drawStackedAreaSubset({
           .attr("stroke", "#ccc")
           .attr("stroke-opacity", 0.6);
       
-
-      svg.append("g")
+      /* 1 ▸ draw the areas once and keep the paths in `layer` */
+      /* 1 ▸ draw the areas once and keep the paths in `layer` */
+      const layer = svg.append("g")
         .selectAll("path")
         .data(stacked)
         .join("path")
           .attr("fill", d => GLOBAL.colour.get(d.key))
           .attr("d", areaZero)
-        .transition(t)
+          .attr("pointer-events", "all");   // enable hover
+
+      /* 2 ▸ animate them in, then call renderAnnotations */
+      layer.transition(t)
           .attr("d", area)
-        .end()
-        .then(renderAnnotations); 
+          .end()
+          .then(renderAnnotations);
+
+      /* 3 ▸ attach tooltip + highlight listeners (same as before) */
+      const HIGHLIGHT_STROKE   = "#000";
+      const HIGHLIGHT_STROKE_W = 1.2;
+      const DIM_OPACITY        = 0.75;
+
+      layer.on("mouseover", function (event, series) {
+              layer.attr("fill-opacity", DIM_OPACITY);
+
+              d3.select(this)
+                .raise()
+                .attr("fill-opacity", 1)
+                .attr("stroke", HIGHLIGHT_STROKE)
+                .attr("stroke-width", HIGHLIGHT_STROKE_W);
+
+              tip.style("opacity", 1);
+              handleMove(event, series);           // `series` is already bound data
+            })
+          .on("mousemove", function (event, series) {
+              handleMove(event, series);
+            })
+          .on("mouseout", function () {
+              layer.attr("fill-opacity", 1).attr("stroke", null);
+              tip.style("opacity", 0);
+            });
+
+      /* helper (place once, e.g. after you build `years`) */
+      const bisectYear = d3.bisector(d => d).left;
+
+      function handleEnter(event, series) {
+        tip.style("opacity", 1);
+        d3.select(this).attr("stroke", "#000").attr("stroke-width", 1.2);
+        handleMove(event, series);
+      }
+
+      function handleMove(event, series) {
+        // 1️⃣ get the full time-series for this country
+        const countryData = dataByCountry.get(series.key);
+        if (!countryData) return;
+
+        // 2️⃣ compute total temperature change
+        const endTemp   = countryData[countryData.length - 1].temperature_change_from_co2;
+        const totalCO2 = d3.sum(countryData, d => d.co2);
+
+        // 3️⃣ build two small datasets for the sparklines
+        const gdpSeries = countryData
+          .map(d => ({ year: d.year, value: d.gdp_per_capita }))
+          .filter(d => d.value != null);
+
+        const co2Series = countryData
+          .map(d => ({ year: d.year, value: d.co2_per_capita }))
+          .filter(d => d.value != null);
+
+        // 4️⃣ clear existing tooltip content
+        tip.html("")  
+          .style("left",  (event.pageX + 12) + "px")
+          .style("top",   (event.pageY - 28) + "px");
+
+        tip.append("div")
+          .html(`
+            <strong>${series.key}</strong><br/>
+            CO₂ Emitted (Billion Metric Tons): ${d3.format(".2f")(totalCO2)}<br/>
+            Cumulative Temperature Change from CO₂: ${
+              isNaN(endTemp)
+                ? "N/A"
+                : d3.format("+.2f")(endTemp)
+            } °C
+          `)
+          .style("margin-bottom", "6px");
+
+        function maybeSpark(container, data, color, label) {
+          // ① wrapper DIV for centering
+          const wrap = container.append("div")
+            .style("text-align", "center")
+            .style("margin", "8px 0");
+
+          // ② label
+          wrap.append("div")
+              .style("font-size", "11px")
+              .text(label);
+
+          if (data.length < 2) {
+            wrap.append("div")
+                .style("font-size", "10px")
+                .style("font-style", "italic")
+                .style("color", "#666")
+                .text("Data unavailable");
+            return;
+          }
+
+          // ③ SVG
+          const svgSpark = wrap.append("svg")
+            .attr("width",  sparkWidth)
+            .attr("height", sparkHeight)
+            .style("display", "inline-block");  // so centering works
+
+          // ④ scales
+          const sparkX = d3.scaleLinear()
+            .domain(d3.extent(data, d => d.year))
+            .range([sparkMargin.left, sparkWidth  - sparkMargin.right]);
+
+          const sparkY = d3.scaleLinear()
+            .domain(d3.extent(data, d => d.value))
+            .range([sparkHeight - sparkMargin.bottom, sparkMargin.top]);
+
+          // ⑤ line
+          const line = d3.line()
+            .x(d => sparkX(d.year))
+            .y(d => sparkY(d.value));
+
+          svgSpark.append("path")
+            .datum(data)
+            .attr("d", line)
+            .attr("fill", "none")
+            .attr("stroke", color)
+            .attr("stroke-width", 1.5);
+        }
+        const sparkWrapper = tip.append("div")
+            .style("display", "flex")
+            .style("justify-content", "center")
+            .style("gap", "12px")        // space between the two
+            .style("margin-top", "6px");
+
+        maybeSpark(sparkWrapper, gdpSeries, "#1f77b4", "GDP Per Capita");
+        maybeSpark(sparkWrapper, co2Series, "#ff7f0e", "CO₂ Per Capita");
+      }
+
+      function handleLeave() {
+        tip.style("opacity", 0);
+        d3.select(this).attr("stroke", null);
+      }
 
       /* axes */
       svg.append("g")

@@ -1,6 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const scenes = [scene0, scene1, scene2];
+  const scenes = [ scene0, scene1, scene2 ];
+  const sceneLabels = [
+    "WWI & Depression Era",
+    "WWII & Post-War Era",
+    "Globalization Era"
+  ];
   let sceneIndex = 0;
+
+  //  ● grab the container
+  const sceneButtonsDiv = document.getElementById("scene-buttons");
+
+  //  ● for each scene, make a button
+  scenes.forEach((sceneFn, idx) => {
+    const btn = document.createElement("button");
+    btn.classList.add("scene-btn");
+    btn.textContent = sceneLabels[idx];;
+    btn.addEventListener("click", () => {
+      sceneIndex = idx;
+      renderScene();
+    });
+    sceneButtonsDiv.appendChild(btn);
+  });
 
   function renderScene() {
     d3.select("#viz-container").html("");
@@ -9,10 +29,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateButtons() {
+    // disable/enable prev & next as before
     document.getElementById("prev-btn").disabled = sceneIndex === 0;
     document.getElementById("next-btn").disabled = sceneIndex === scenes.length - 1;
+
+    // highlight the active scene button
+    document.querySelectorAll(".scene-btn").forEach((btn, idx) => {
+      btn.classList.toggle("active", idx === sceneIndex);
+    });
   }
 
+  // existing prev/next handlers
   document.getElementById("prev-btn").addEventListener("click", () => {
     if (sceneIndex > 0) { sceneIndex--; renderScene(); }
   });
@@ -20,14 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sceneIndex < scenes.length - 1) { sceneIndex++; renderScene(); }
   });
 
-  window.addEventListener("keydown", (e) => {
-    const key = e.key || e.code;
-    if (key === "ArrowLeft" || key === "Left") {
-      if (sceneIndex > 0) { sceneIndex--; renderScene(); }
-      e.preventDefault();
-    } else if (key === "ArrowRight" || key === "Right") {
-      if (sceneIndex < scenes.length - 1) { sceneIndex++; renderScene(); }
-      e.preventDefault();
+  // existing arrow-key handling
+  window.addEventListener("keydown", e => {
+    if ((e.key === "ArrowLeft" || e.key === "Left") && sceneIndex > 0) {
+      sceneIndex--; renderScene(); e.preventDefault();
+    }
+    if ((e.key === "ArrowRight" || e.key === "Right") && sceneIndex < scenes.length - 1) {
+      sceneIndex++; renderScene(); e.preventDefault();
     }
   });
 
