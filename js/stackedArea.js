@@ -103,7 +103,7 @@ function drawStackedAreaSubset({
       svg.append("text")
           .attr("class", "chart-title")
           .attr("x", (width - margin.right + margin.left) / 2)
-          .attr("y", margin.top / 2)
+          .attr("y", margin.top * 0.4)
           .attr("text-anchor", "middle")
           .attr("font-size", 22)
           .attr("font-weight", "600")
@@ -120,7 +120,7 @@ function drawStackedAreaSubset({
 
       svg.append("text")
           .attr("transform", `rotate(-90)`)
-          .attr("x", - (margin.top-innerHeight / 2))
+          .attr("x", - (margin.top + innerHeight / 2))
           .attr("y", margin.left - 50)
           .attr("text-anchor", "middle")
           .attr("font-size", 14)

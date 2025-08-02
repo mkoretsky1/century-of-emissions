@@ -19,7 +19,7 @@ function scene1() {
         year: 1945,
         country: "Ukraine",
         dx: 0,
-        dy: -150,
+        dy: -110,
         wrap: 250,
         title: "World War II Ends (September 1945)",
         text:  "The end of history's deadliest war starts an era of unprecedented economic growth. In turn, CO₂ emissions begin to increase rapidly."

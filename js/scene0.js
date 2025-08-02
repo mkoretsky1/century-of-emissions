@@ -18,7 +18,7 @@ function scene0() {
         type: "label",
         year: 1932,
         country: "United States",
-        dx: 130,
+        dx: 135,
         dy: 0,
         wrap: 150,
         title: "FDR Elected (November 1932)",
