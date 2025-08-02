@@ -65,7 +65,8 @@ function drawStackedAreaSubset({
       const grid = d3.axisLeft(y)
         .tickSize(-(width - margin.left - margin.right))
         .tickFormat("")
-        .ticks(6, "s");
+        .ticks(6, "s")
+        .tickSizeOuter(0);
 
       svg.append("g")
         .attr("class", "y-grid")
