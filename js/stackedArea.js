@@ -62,6 +62,20 @@ function drawStackedAreaSubset({
         .attr("width",  width)
         .attr("height", height);
 
+      const grid = d3.axisLeft(y)
+        .tickSize(-(width - margin.left - margin.right))
+        .tickFormat("")
+        .ticks(6, "s");
+
+      svg.append("g")
+        .attr("class", "y-grid")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(grid)
+        .selectAll("line")
+          .attr("stroke", "#ccc")
+          .attr("stroke-opacity", 0.6);
+      
+
       svg.append("g")
         .selectAll("path")
         .data(stacked)
@@ -83,14 +97,6 @@ function drawStackedAreaSubset({
       svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(y).ticks(6, "s"));
-
-      svg.append("g")
-        .attr("class", "y-grid")
-        .attr("transform", `translate(${margin.left},0)`)
-        .call(grid)
-        .selectAll("line")
-          .attr("stroke", "#ccc")
-          .attr("stroke-opacity", 0.6);
 
       svg.append("text")
         .attr("x", (width - margin.right + margin.left) / 2)
