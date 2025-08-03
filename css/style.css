@@ -82,3 +82,32 @@ svg {
 .scene-btn:focus {
   outline: none;
 }
+
+#scene-text {
+  /* match the chart’s inner width and margins */
+  width: 1000px;
+  margin-left: 150px;
+  margin-right: 150px;
+
+  /* more line spacing */
+  line-height: 1.6;       /* ~160% of the font size */
+
+  /* optional – tweak font-size or color if you like */
+  font-size: 1rem;
+  color: #333;
+}
+
+#instructions {
+  /* match the chart’s inner width and margins */
+  width: 1000px;
+  margin-left: 150px;
+  margin-right: 150px;
+  margin-top: 50px;
+
+  /* more line spacing */
+  line-height: 1.6;       /* ~160% of the font size */
+
+  /* optional – tweak font-size or color if you like */
+  font-size: 0.8rem;
+  color: #333;
+}

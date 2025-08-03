@@ -25,6 +25,10 @@ function drawStackedAreaSubset({
       const sparkHeight =  40;
       const sparkMargin = { top: 2, right: 2, bottom: 2, left: 2 };
 
+      const topLine = d3.line()
+        .x(d => x(d.data.Year) + x.bandwidth()/2)
+        .y(d => y(d[1]));
+
       // a simple line generator for sparklines:
       const sparkLine = d3.line()
         .x(d => sparkX(d.year))
@@ -107,18 +111,53 @@ function drawStackedAreaSubset({
       /* 1 ▸ draw the areas once and keep the paths in `layer` */
       /* 1 ▸ draw the areas once and keep the paths in `layer` */
       const layer = svg.append("g")
-        .selectAll("path")
+        .selectAll("path.area")
         .data(stacked)
         .join("path")
+          .attr("class", "area")
           .attr("fill", d => GLOBAL.colour.get(d.key))
-          .attr("d", areaZero)
-          .attr("pointer-events", "all");   // enable hover
+          .attr("d", areaZero);
+
+      // const topEdges = svg.append("g")
+      //   .selectAll("path.edge")
+      //   .data(stacked)
+      //   .join("path")
+      //     .attr("class", "edge")
+      //     .attr("fill", "none")
+      //     .attr("stroke", d => d3.color(GLOBAL.colour.get(d.key)).darker(0.8))
+      //     .attr("stroke-width", 1)
+      //     .attr("d", d => {
+      //       // start the line flat at y=0
+      //       return d3.line()
+      //         .x(d => x(d.data.Year) + x.bandwidth()/2)
+      //         .y(() => y(0))(d);
+      //     })
+      //     .attr("opacity", 0);
 
       /* 2 ▸ animate them in, then call renderAnnotations */
       layer.transition(t)
-          .attr("d", area)
-          .end()
-          .then(renderAnnotations);
+        .attr("d", area)
+        .end()
+        .then(renderAnnotations);
+
+      // topEdges.transition(t)
+      //     .attr("d", topLine)    // animate up to the real top‐edge
+      //     .attr("opacity", 1)
+      //     .end()
+      //     .then(renderAnnotations);
+      // layer.transition(t)
+      //     .attr("d", area)
+      //     .end()
+      //     .then(renderAnnotations);
+
+      // stacked.forEach(series => {
+      // svg.append("path")
+      //   .datum(series)
+      //   .attr("d", topLine)
+      //   .attr("fill", "none")
+      //   .attr("stroke", d => d3.color(GLOBAL.colour.get(series.key)).darker(0.7))
+      //   .attr("stroke-width", 1);
+      // });
 
       /* 3 ▸ attach tooltip + highlight listeners (same as before) */
       const HIGHLIGHT_STROKE   = "#000";
@@ -242,8 +281,8 @@ function drawStackedAreaSubset({
             .style("gap", "12px")        // space between the two
             .style("margin-top", "6px");
 
-        maybeSpark(sparkWrapper, gdpSeries, "#1f77b4", "GDP Per Capita");
         maybeSpark(sparkWrapper, co2Series, "#ff7f0e", "CO₂ Per Capita");
+        maybeSpark(sparkWrapper, gdpSeries, "#1f77b4", "GDP Per Capita");
       }
 
       function handleLeave() {

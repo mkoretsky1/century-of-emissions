@@ -12,7 +12,7 @@ function scene1() {
         dy: 0,
         wrap: 250,
         title: "Emissions Explode",
-        text: "The total CO₂ output from the top 10 emitting countries increases around 3.5x in just over 50 years."
+        text: "The total CO₂ output from the top-10 emitting countries increases around 3.5x in just over 50 years."
       },
       {
         type: "label",
@@ -23,6 +23,16 @@ function scene1() {
         wrap: 250,
         title: "World War II Ends (September 1945)",
         text:  "The end of history's deadliest war starts an era of unprecedented economic growth. In turn, CO₂ emissions begin to increase rapidly."
+      },
+      {
+        type: "label",
+        year: 1991,
+        country: "China",
+        dx: 40,
+        dy: 0,
+        wrap: 145,
+        title: "Emerging Powers",
+        text:  "Russia and the Soviet Union exploit their natural gas and oil reserves to rapidly industrialize amidst an arms race with the United States during the Cold War. China's CO₂ emissions begin to increase steadily as they open themselves up to foreign trade following Mao Zedong's death in 1976."
       }
     ],
     title: "WWII and Post-War Era (1939-1991)"

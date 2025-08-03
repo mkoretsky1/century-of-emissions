@@ -22,7 +22,7 @@ function scene2() {
         dy: 0,
         wrap: 150,
         title: "Renewable Energy and Climate Change",
-        text: "Increased investment in renewable energy sources and concern over climate change causes emissions in the US and other countries to stop growing."
+        text: "Increased investment in renewable energy sources and concern over climate change causes emissions in the United States and other countries to stop growing."
       }
     ],
     title: "Digital and Global Era (1991-2022)"
