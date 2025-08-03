@@ -75,6 +75,10 @@ svg {
 
 #scene-buttons .scene-btn.active {
   background: #007acc;
-  border-color: #005a9e;
+  /* border-color: #005a9e; */
   color: #fff;
+}
+
+.scene-btn:focus {
+  outline: none;
 }
